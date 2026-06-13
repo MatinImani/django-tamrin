@@ -1,0 +1,61 @@
+
+<!-- ۴. تفاوت آکولادها
+❌ {variable} - اشتباه (این برای f-string پایتون است)
+✅ {{ variable }} - درست (این برای Django templates است) -->
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واحدهای دانشگاهی</title>
+    <link rel="stylesheet" href="../../static/myapp/style-units.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 واحدهای دانشگاهی</h1>
+            <p>لیست دروس اخذ شده در ترم جاری</p>
+            <div class="student-info">
+                <p><strong>نام دانشجو:</strong>{{name}}</p>
+
+            </div>
+        </div>
+
+        <div class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام درس</th>
+                        <th>تعداد واحد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ rows|safe }} 
+                    <tr class="total-row">
+                        <td colspan="2">مجموع کل واحدها</td>
+                        <td>{{ total_units }} واحد</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="summary">
+                <div class="summary-item">
+                    <span class="number">{{ courses_count }}</span>
+                    <span class="label">تعداد دروس</span>
+                </div>
+                <div class="summary-item">
+                    <span class="number">{{ total_units }}</span>
+                    <span class="label">مجموع واحدها</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

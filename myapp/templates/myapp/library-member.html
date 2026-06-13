@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  کتابخانه</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', 'Arial', sans-serif;
+                background: linear-gradient(135deg, #7585cf63 0%, #fefdff 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header .member-id {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .member-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card .label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .info-card .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        tbody tr:hover {
+            background: #f5f5f5;
+            transition: background 0.3s;
+        }
+
+        .returned {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .unreturned {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .alert-box h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-box ul {
+            list-style: none;
+            padding-right: 20px;
+        }
+
+        .alert-box li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 16px;
+        }
+
+        .alert-box li:last-child {
+            border-bottom: none;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(56, 239, 125, 0.3);
+        }
+
+        .success-box h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-item .label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 پروفایل عضو کتابخانه</h1>
+            <div class="member-id">شناسه: {{ member_id }}</div>
+        </div>
+
+        <div class="content">
+            <!-- اطلاعات عضو -->
+            <div class="member-info">
+                <div class="info-card">
+                    <div class="label">نام و نام خانوادگی</div>
+                    <div class="value">{{ member_name|default:"نامشخص" }}</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">رشته تحصیلی</div>
+                    <div class="value">{{ major|default:"نامشخص" }}</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">تعداد امانت‌ها</div>
+                    <div class="value">{{ total_borrows|default:"نامشخص" }} کتاب</div>
+                </div>
+            </div>
+
+            <!-- آمار -->
+            <!-- <div class="stats">
+                <div class="stat-item">
+                    <span class="number">{{ total_borrows }}</span>
+                    <span class="label">کل کتاب‌های امانت گرفته</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number" style="color: #28a745;">{{ total_borrows|add:"-unreturned_count" }}</span>
+                    <span class="label">کتاب‌های برگردانده شده</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number" style="color: #dc3545;">{{ unreturned_count }}</span>
+                    <span class="label">کتاب‌های برگردانده نشده</span>
+                </div>
+            </div> -->
+
+            <!-- آمار -->
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="number">{{ total_borrows }}</span>
+                    <span class="label">کل کتاب‌های امانت گرفته</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number" style="color: #28a745;">{{ returned_count }}</span>
+                    <span class="label">کتاب‌های برگردانده شده</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number" style="color: #dc3545;">{{ unreturned_count }}</span>
+                    <span class="label">کتاب‌های برگردانده نشده</span>
+                </div>
+            </div>
+
+            <!-- جدول کتاب‌ها -->
+            <!-- <h2>📖 لیست کتاب‌های امانت گرفته شده</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>عنوان کتاب</th>
+                        <th>نویسنده</th>
+                        <th>تاریخ امانت</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ books_rows|safe }}
+                </tbody>
+            </table> -->
+
+            <!-- پیام به کتابخانه -->
+            <!-- {% if has_unreturned %}
+            <div class="alert-box">
+                <h3>⚠️ توجه: کتاب‌های برگردانده نشده</h3>
+                <p style="margin-bottom: 15px;">این عضو هنوز <strong>{{ unreturned_count }}</strong> کتاب را به کتابخانه
+                    برنگردانده است:</p>
+                <ul>
+                    {{ unreturned_list|safe }}
+                </ul>
+                <p style="margin-top: 20px; font-size: 14px;">
+                    لطفاً با عضو تماس بگیرید و یادآوری کنید که کتاب‌ها را هرچه سریع‌تر برگرداند.
+                </p>
+            </div>
+            {% else %}
+            <div class="success-box">
+                <h3>✅ عالی!</h3>
+                <p>همه کتاب‌ها به موقع برگردانده شده‌اند. این عضو خوش‌حساب است!</p>
+            </div>
+            {% endif %} -->
+
+
+
+            <!-- جدول کتاب‌ها -->
+            <h2>📖 لیست کتاب‌های امانت گرفته شده</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>عنوان کتاب</th>
+                        <th>نویسنده</th>
+                        <th>تاریخ امانت</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.id|default:"نامشخص" }}</td>
+                        <td>{{ book.title|default:"نامشخص" }}</td>
+                        <td>{{ book.author|default:"نامشخص" }}</td>
+                        <td>{{ book.borrow_date|default:"نامشخص" }}</td>
+                        <td class="{% if book.status == 'برگشت داده شده' %}returned{% else %}unreturned{% endif %}">
+                            {{ book.status|default:"نامشخص" }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+            <!-- پیام به کتابخانه -->
+            {% if unreturned_books %}
+            <div class="alert-box">
+                <h3>⚠️ توجه: کتاب‌های برگردانده نشده</h3>
+                <p style="margin-bottom: 15px;">
+                    این عضو هنوز <strong>{{ unreturned_books|length }}</strong> کتاب را برنگردانده است:
+                </p>
+                <ul>
+                    {% for book in unreturned_books %}
+                    <li>
+                        <strong>{{ book.title }}</strong> - نویسنده: {{ book.author }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% else %}
+            <div class="success-box">
+                <h3>✅ عالی!</h3>
+                <p>همه کتاب‌ها به موقع برگردانده شده‌اند.</p>
+            </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+</body>
+
+</html>
