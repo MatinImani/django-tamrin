@@ -12,6 +12,7 @@ def main(request):
 #  را به عنوان نام متغیر شناسایی کرده
 #  و مقدار آن را در رشته قرار می‌دهد.
 # http://127.0.0.1:8000/sum-varible/5/6
+# http://127.0.0.1:8000/myapp/sum-varible/5/6
 def sumAB(request, a , b):
     res = a + b
     return HttpResponse(f'the sum is  equal to {res}')
@@ -28,6 +29,7 @@ def print_text_n_times(request,text,n):
 #میخوایم عدد اعشاری در هم ضرب کنیم
 # فلوت رو متوجه نمیشه برای همین اون سمت استرینگ میفرستیم اینجا تبدیل میکنیم به فلوت path  متد 
 #http://127.0.0.1:8000/product/5.5/6/10
+#http://127.0.0.1:8000/myapp/product/5.5/6/10
 def product(request,a,b,c):
     fa=float(a)
     fb=float(b)
@@ -36,6 +38,7 @@ def product(request,a,b,c):
     return HttpResponse(result)
 
 # http://127.0.0.1:8000/buy/6000/5500
+# http://127.0.0.1:8000/myapp/buy/6000/5500
 def buy(request,price,mymoney):
     price=float(price)
     mymoney=float(mymoney)
@@ -53,6 +56,7 @@ def buy(request,price,mymoney):
 
 
 # http://127.0.0.1:8000/units/
+# http://127.0.0.1:8000/myapp/units/
 def get_unit(request):
     # لیست دروس و واحدها (می‌توانید تغییر دهید)
     courses = [
@@ -241,6 +245,7 @@ def get_unit(request):
 
     
 # http://127.0.0.1:8000/unitsmodular/
+# http://127.0.0.1:8000/myapp/unitsmodular/
 def get_unit_modular(request):
      # لیست دروس و واحدها (می‌توانید تغییر دهید)
     courses = [
@@ -280,6 +285,7 @@ def get_unit_modular(request):
 
 
 # http://127.0.0.1:8000/hello/matin
+# http://127.0.0.1:8000/myapp/hello/matin
 def hello_user(request, username):
     context = {
         'username': username,
@@ -370,6 +376,7 @@ with open(DATA_FILE, 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 # http://127.0.0.1:8000/library/1
+# http://127.0.0.1:8000/myapp/library/1
 def library_member(request, member_id):
 
     

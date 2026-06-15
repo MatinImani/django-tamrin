@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اطلاعات عضو</title>
+
+    <!-- فونت فارسی وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #62c18c 0%, #b7b7b7 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* کارت اطلاعات عضو */
+        .member-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(135deg, #62c18c 0%, #b7b7b7 100%);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+
+        .card-header .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #defff9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(94, 104, 150, 0.4);
+        }
+
+        .card-header h2 {
+            color: #2d3748;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-right: 4px solid #66ea96;
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-item .label {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-item .value {
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* کارت جدول کتاب‌ها */
+        .books-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .books-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .books-header .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .books-header h2 {
+            color: #2d3748;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(359deg, #00b20e, #415f3a);
+        }
+
+        thead th {
+            color: white;
+            padding: 18px 15px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+
+        thead th:first-child {
+            border-top-right-radius: 12px;
+        }
+
+        thead th:last-child {
+            border-top-left-radius: 12px;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f7fafc;
+            transform: scale(1.01);
+        }
+
+        tbody td {
+            padding: 16px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody td:first-child {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        /* حالت خالی بودن جدول */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #a0aec0;
+        }
+
+        .empty-state .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .member-card,
+            .books-card {
+                padding: 20px;
+            }
+
+            .card-header h2 {
+                font-size: 20px;
+            }
+
+            thead th,
+            tbody td {
+                padding: 12px 10px;
+                font-size: 13px;
+            }
+        }
+
+        /* انیمیشن ورود */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .member-card,
+        .books-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .books-card {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- کارت اطلاعات عضو -->
+        <div class="member-card">
+            <div class="card-header">
+                <div class="icon">👤</div>
+                <h2>اطلاعات عضو</h2>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">📝 نام</div>
+                    <div class="value">{{ member.first_name }}</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="label">📝 نام خانوادگی</div>
+                    <div class="value">{{ member.last_name }}</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="label">🎂 تاریخ تولد</div>
+                    <div class="value">{{ member.birth_date }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- کارت کتاب‌های امانت گرفته شده -->
+        <div class="books-card">
+            <div class="books-header">
+                <div class="icon">📚</div>
+                <h2>کتاب‌های امانت گرفته شده</h2>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>شماره کتاب</th>
+                            <th>عنوان کتاب</th>
+                            <th>مولف</th>
+                            <th>سال چاپ</th>
+                            <th>تاریخ امانت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- member ← همون عضوی که از view فرستادیم
+.books ← همه کتاب‌های این عضو (به خاطر related_name='books')
+.all() ← متدیه که همه رکوردها رو به صورت یک QuerySet برمی‌گردونه -->
+                        {% for book in member.books.all %}
+                        <tr>
+                            <td>{{ book.id }}</td>
+                            <td><a href="/../../loan/bookdetail/{{ book.id }}">{{ book.title }}</a></td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.year }}</td>
+                            <!-- <td><a href="/../../loan/bookdetail/{{ book.id }}">{{ book.year }}</a></td> -->
+                            <td>{{ book.loan_date }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="empty-state">
+                                    <div class="icon">📖</div>
+                                    <p>هنوز کتابی امانت گرفته نشده است</p>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
