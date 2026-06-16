@@ -40,6 +40,10 @@ from django.contrib import admin
 
 from django.urls import path, include # حتما include رو ایمپورت کن
 
+
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     
@@ -48,4 +52,13 @@ urlpatterns = [
     
     # هر چیزی که با loan/ شروع بشه میره توی urls.pyِ اپ loan_app
     path('loan/', include('loan_app.urls')), 
+
+
+    path('products/', include('products_app.urls')),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

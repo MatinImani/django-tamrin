@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'loan_app',
+    'products_app',
 ]
 
 MIDDLEWARE = [
@@ -117,3 +118,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+# config/settings.py - آخر فایل اضافه کن
+
+# آخر فایل config/settings.py
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'  # یا os.path.join(BASE_DIR, 'media')

@@ -1,9 +1,8 @@
-
 <!-- ۴. تفاوت آکولادها
 ❌ {variable} - اشتباه (این برای f-string پایتون است)
 ✅ {{ variable }} - درست (این برای Django templates است) -->
 
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -11,7 +10,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>واحدهای دانشگاهی</title>
-    <link rel="stylesheet" href="../../static/myapp/style-units.css">
+    <!-- <link rel="stylesheet" href="../../static/myapp/style-units.css"> -->
+    <link rel="stylesheet" href="{% static 'myapp/style-units.css' %}">
+
+
 
 </head>
 
@@ -36,7 +38,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{ rows|safe }} 
+                    {{ rows|safe }}
                     <tr class="total-row">
                         <td colspan="2">مجموع کل واحدها</td>
                         <td>{{ total_units }} واحد</td>
