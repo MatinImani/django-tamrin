@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Product
 
+# http://127.0.0.1:8000/products/add/
 def product_add(request):
     if request.method == 'POST':
         title = request.POST.get('title')
